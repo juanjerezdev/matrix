@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using matrix.console.Helpers;
+using System;
 
 namespace matrix.console
 {
@@ -10,6 +7,10 @@ namespace matrix.console
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Ingrese el path del archivo txt y presione Enter (sino deje en blanco y se utilizará el predeterminado) :");
+            string path = Console.ReadLine();
+
+            string[] text = FileHelper.Read(path);
         }
     }
 }
