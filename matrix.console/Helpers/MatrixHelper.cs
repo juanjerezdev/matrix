@@ -48,13 +48,13 @@ namespace matrix.console.Helpers
                 throw ex;
             }
         }
-
         public static void GetLongString(string[,] matrix, int count)
         {
             try
             {
                 string resultString = "";
                 resultString = HorizontalVertical(matrix, resultString, count);
+                resultString = Diagonal(matrix, resultString, count);
 
                 Console.WriteLine();
                 Console.WriteLine("=======================================");
@@ -123,6 +123,52 @@ namespace matrix.console.Helpers
             }
             catch (Exception ex)
             {
+                throw ex;
+            }
+        }
+        private static string Diagonal(string[,] matrix, string result, int count)
+        {
+            try
+            {
+                string concat = "";
+                string concatMainDiagonal = "";
+
+                for (int i = 0; i < count; i++)
+                {
+                    for (int j = count - 1; j >= 0; j--)
+                    {
+                        // diagonal principal
+                        if (i == j)
+                            concatMainDiagonal = concatMainDiagonal + matrix[i, j];
+
+                        // busco los extremos y despues sus diagonales
+                        if (i == 0 && j > 0 || i > 0 && j == 0)
+                        {
+                            var col = j + 1;
+                            if (col <= count)
+                            {
+                                var cantidadColumna = Math.Abs(i + j - count);
+                                for (int d = 0; d < cantidadColumna; d++)
+                                    concat = concat + matrix[d + i, j + d];
+
+                                string stringLong = GetString(concat);
+                                if (stringLong.Length > result.Length)
+                                    result = stringLong;
+
+                                concat = "";
+                            }
+                        }
+                    }
+                }
+                string stringLongMainDiagonal = GetString(concatMainDiagonal);
+                if (stringLongMainDiagonal.Length > result.Length)
+                    result = stringLongMainDiagonal;
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+
                 throw ex;
             }
         }
