@@ -48,5 +48,83 @@ namespace matrix.console.Helpers
                 throw ex;
             }
         }
+
+        public static void GetLongString(string[,] matrix, int count)
+        {
+            try
+            {
+                string resultString = "";
+                resultString = HorizontalVertical(matrix, resultString, count);
+
+                Console.WriteLine();
+                Console.WriteLine("=======================================");
+                Console.WriteLine("La cadena mas larga es: {0}", resultString);
+                Console.WriteLine("=======================================");
+                Console.WriteLine();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private static string GetString(string value)
+        {
+            try
+            {
+                string longString = "";
+                string longStringMax = "";
+                char currentChar = value[0];
+
+                foreach (char c in value)
+                {
+                    if (currentChar == c)
+                        longString = longString + c;
+                    else
+                    {
+                        if (longString.Length > longStringMax.Length)
+                            longStringMax = longString;
+
+                        longString = c.ToString();
+                    }
+                    currentChar = c;
+                }
+                return longString.Length > longStringMax.Length ? longString : longStringMax;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private static string HorizontalVertical(string[,] matrix, string result, int count)
+        {
+            try
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    string concatHorizontal = "";
+                    string concatVertical = "";
+
+                    for (int j = 0; j < count; j++)
+                    {
+                        concatHorizontal = concatHorizontal + matrix[i, j];
+                        concatVertical = concatVertical + matrix[j, i];
+                    }
+
+                    string stringLongHorizontal = GetString(concatHorizontal);
+                    if (stringLongHorizontal.Length > result.Length)
+                        result = stringLongHorizontal;
+
+                    string stringLongVertical = GetString(concatVertical);
+                    if (stringLongVertical.Length > result.Length)
+                        result = stringLongVertical;
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

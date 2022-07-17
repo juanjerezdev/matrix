@@ -14,6 +14,10 @@ namespace matrix.console
 
                 string[] text = FileHelper.Read(path);
                 var data = MatrixHelper.GetData(text);
+                MatrixHelper.GetLongString(data.Matrix, data.Count);
+
+                Console.WriteLine("Presione enter para finalizar.");
+                Console.ReadLine();
             }
             catch (Exception ex)
             {
