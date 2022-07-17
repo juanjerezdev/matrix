@@ -1,15 +1,11 @@
-﻿using matrix.console.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace matrix.console.Helpers
 {
     internal class MatrixHelper
     {
-        public static MatrixDto GetData(string[] input)
+        public static string[,] GetData(string[] input)
         {
             try
             {
@@ -18,18 +14,18 @@ namespace matrix.console.Helpers
                 Console.WriteLine("=======================================");
                 Console.WriteLine();
 
-                int count = input.Length;
+                int length = input.Length;
 
-                if (count == 0)
+                if (length == 0)
                     throw new Exception("Debe cargar la matriz");
 
-                string[,] result = new string[count, count];
+                string[,] result = new string[length, length];
 
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i < length; i++)
                 {
                     var rowSplit = input[i].Split(',', (char)StringSplitOptions.RemoveEmptyEntries);
                     var rowSplitTrim = rowSplit.Where(x => !string.IsNullOrEmpty(x.Trim())).ToArray(); // valida que no haya espacios en vez de caracteres
-                    var isSquareMatrix = rowSplitTrim.Length == count;
+                    var isSquareMatrix = rowSplitTrim.Length == length;
 
                     if (!isSquareMatrix)
                         throw new Exception("La matriz debe ser cuadrada");
@@ -37,24 +33,26 @@ namespace matrix.console.Helpers
                     for (int j = 0; j < rowSplit.Length; j++)
                     {
                         result[i, j] = rowSplit[j].Trim().ToUpper();
-                        Console.Write(result[i, j]);
+                        Console.Write(result[i, j] + " ");
                     }
                     Console.WriteLine();
                 }
-                return new MatrixDto { Matrix = result, Count = count };
+                return result;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public static void GetLongString(string[,] matrix, int count)
+        public static void GetLongString(string[,] matrix)
         {
             try
             {
+                int matrixLength = matrix.GetLength(0);
                 string resultString = "";
-                resultString = HorizontalVertical(matrix, resultString, count);
-                resultString = Diagonal(matrix, resultString, count);
+
+                resultString = HorizontalVertical(matrix, resultString, matrixLength);
+                resultString = Diagonal(matrix, resultString, matrixLength);
 
                 Console.WriteLine();
                 Console.WriteLine("=======================================");
@@ -95,16 +93,16 @@ namespace matrix.console.Helpers
                 throw ex;
             }
         }
-        private static string HorizontalVertical(string[,] matrix, string result, int count)
+        private static string HorizontalVertical(string[,] matrix, string result, int matrixLength)
         {
             try
             {
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i < matrixLength; i++)
                 {
                     string concatHorizontal = "";
                     string concatVertical = "";
 
-                    for (int j = 0; j < count; j++)
+                    for (int j = 0; j < matrixLength; j++)
                     {
                         concatHorizontal = concatHorizontal + matrix[i, j];
                         concatVertical = concatVertical + matrix[j, i];
@@ -126,16 +124,16 @@ namespace matrix.console.Helpers
                 throw ex;
             }
         }
-        private static string Diagonal(string[,] matrix, string result, int count)
+        private static string Diagonal(string[,] matrix, string result, int matrixLength)
         {
             try
             {
                 string concat = "";
                 string concatMainDiagonal = "";
 
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i < matrixLength; i++)
                 {
-                    for (int j = count - 1; j >= 0; j--)
+                    for (int j = matrixLength - 1; j >= 0; j--)
                     {
                         // diagonal principal
                         if (i == j)
@@ -145,9 +143,9 @@ namespace matrix.console.Helpers
                         if (i == 0 && j > 0 || i > 0 && j == 0)
                         {
                             var col = j + 1;
-                            if (col <= count)
+                            if (col <= matrixLength)
                             {
-                                var cantidadColumna = Math.Abs(i + j - count);
+                                var cantidadColumna = Math.Abs(i + j - matrixLength);
                                 for (int d = 0; d < cantidadColumna; d++)
                                     concat = concat + matrix[d + i, j + d];
 
