@@ -1,0 +1,11 @@
+# dependencies
+bin
+obj
+.vs
+.idea
+.user
+
+# misc
+.DS_Store
+.env*
+
