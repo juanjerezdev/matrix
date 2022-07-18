@@ -129,44 +129,41 @@ namespace matrix.console.Helpers
             try
             {
                 string concat = "";
-                string concatMainDiagonal = "";
 
-                for (int i = 0; i < matrixLength; i++)
+                // arranco del extremo superior derecho y voy bajando y encontrando las diagonales
+                for (int i = matrixLength - 1; i > -matrixLength; i--)
                 {
-                    for (int j = matrixLength - 1; j >= 0; j--)
+                    // cuando i se pone negativo (cambia de row) le hago el abs para que encuentre el index en la matriz
+                    // la columna es siempre la i hasta que pasa a los negativo y le dejo cero para que tome la primer columna
+
+                    for (int row = (i < 0 ? Math.Abs(i) : 0), col = (i > 0 ? i : 0); row < matrixLength && col < matrixLength; row++, col++)
+                        concat = concat + matrix[row, col];
+
+                    string stringLong = GetString(concat);
+                    if (stringLong.Length > result.Length)
+                        result = stringLong;
+
+                    concat = "";
+
+                    // arranco del extremo inferior izquierdo y voy subiendo y encontrando las diagonales
+                    // tomo la ultima row mientras i sea positivo
+                    for (int row = (i >= 0 ? matrixLength - 1 : i + (matrixLength - 1)), col = (i >= 0 ? (matrixLength - 1) - i : 0); (row < matrixLength && row >= 0) && col < matrixLength; row--, col++)
                     {
-                        // diagonal principal
-                        if (i == j)
-                            concatMainDiagonal = concatMainDiagonal + matrix[i, j];
-
-                        // busco los extremos y despues sus diagonales
-                        if (i == 0 && j > 0 || i > 0 && j == 0)
-                        {
-                            var col = j + 1;
-                            if (col <= matrixLength)
-                            {
-                                var cantidadColumna = Math.Abs(i + j - matrixLength);
-                                for (int d = 0; d < cantidadColumna; d++)
-                                    concat = concat + matrix[d + i, j + d];
-
-                                string stringLong = GetString(concat);
-                                if (stringLong.Length > result.Length)
-                                    result = stringLong;
-
-                                concat = "";
-                            }
-                        }
+                        concat = concat + matrix[row, col];
+                        Console.Write(matrix[row, col]);
                     }
+                    Console.WriteLine();
+                    stringLong = GetString(concat);
+                    if (stringLong.Length > result.Length)
+                        result = stringLong;
+
+                    concat = "";
                 }
-                string stringLongMainDiagonal = GetString(concatMainDiagonal);
-                if (stringLongMainDiagonal.Length > result.Length)
-                    result = stringLongMainDiagonal;
 
                 return result;
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
