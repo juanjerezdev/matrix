@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace matrix.console.Helpers
 {
-    internal class MatrixHelper
+    public class MatrixHelper
     {
         public static string[,] GetData(string[] input)
         {
@@ -44,6 +45,7 @@ namespace matrix.console.Helpers
                 throw ex;
             }
         }
+    
         public static void GetLongString(string[,] matrix)
         {
             try
@@ -130,9 +132,9 @@ namespace matrix.console.Helpers
             {
                 string concat = "";
 
-                // arranco del extremo superior derecho y voy bajando y encontrando las diagonales
                 for (int i = matrixLength - 1; i > -matrixLength; i--)
                 {
+                    // arranco del extremo superior derecho (analizo primera fila y primera columna)
                     // cuando i se pone negativo (cambia de row) le hago el abs para que encuentre el index en la matriz
                     // la columna es siempre la i hasta que pasa a los negativo y le dejo cero para que tome la primer columna
 
@@ -145,14 +147,12 @@ namespace matrix.console.Helpers
 
                     concat = "";
 
-                    // arranco del extremo inferior izquierdo y voy subiendo y encontrando las diagonales
-                    // tomo la ultima row mientras i sea positivo
+                    // arranco del extremo inferior izquierdo (analizo ultima fila y primera columna) para obtener las diagonales secundarias 
+                    // tomo la ultima row mientras i sea positivo, cuando pasa a negativo empiezo a subir por la columna 0
                     for (int row = (i >= 0 ? matrixLength - 1 : i + (matrixLength - 1)), col = (i >= 0 ? (matrixLength - 1) - i : 0); (row < matrixLength && row >= 0) && col < matrixLength; row--, col++)
                     {
                         concat = concat + matrix[row, col];
-                        Console.Write(matrix[row, col]);
                     }
-                    Console.WriteLine();
                     stringLong = GetString(concat);
                     if (stringLong.Length > result.Length)
                         result = stringLong;
@@ -167,5 +167,6 @@ namespace matrix.console.Helpers
                 throw ex;
             }
         }
+
     }
 }

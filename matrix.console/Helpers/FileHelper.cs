@@ -4,7 +4,7 @@ using System.Text;
 
 namespace matrix.console.Helpers
 {
-    internal class FileHelper
+    public class FileHelper
     {
         public static string[] Read(string path)
         {
