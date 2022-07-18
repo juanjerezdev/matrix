@@ -14,7 +14,7 @@ namespace matrix.console.Helpers
                 Console.WriteLine("=======================================");
                 Console.WriteLine();
 
-                input = input.Where(x => !string.IsNullOrEmpty(x.Trim())).ToArray();
+                //input = input.Where(x => !string.IsNullOrEmpty(x.Trim())).ToArray();
                 int length = input.Length;
 
                 if (length == 0)
@@ -28,7 +28,7 @@ namespace matrix.console.Helpers
 
                     for (int j = 0; j < rowSplit.Length; j++)
                     {
-                        result[i, j] = rowSplit[j].Trim().ToUpper();
+                        result[i, j] = rowSplit[j].Trim();
                         Console.Write(result[i, j] + " ");
                     }
                     Console.WriteLine();
@@ -43,6 +43,8 @@ namespace matrix.console.Helpers
         private static string[] Validate(int i, string[] input, int length)
         {
             string[] rowSplit = input[i].Split(',', (char)StringSplitOptions.RemoveEmptyEntries);
+            if (rowSplit.Length > length)
+                throw new Exception("Error en el formato del archivo de texto: La matriz debe ser cuadrada.");
 
             //valido que no haya espacios vacios sin caracteres entre las comas (',')
             string[] rowSplitTrim = rowSplit.Where(x => !string.IsNullOrEmpty(x.Trim())).ToArray();
@@ -56,7 +58,7 @@ namespace matrix.console.Helpers
                 throw new Exception("Error en el formato del archivo de texto: La matriz debe ser cuadrada.");
 
             if (!hasOneCharPerRowCol)
-                throw new Exception("Error en el formato del archivo de texto: La matriz debe contener solo un valor por fila/columna.");
+                throw new Exception("Error en el formato del archivo de texto: La matriz debe contener solo un caracter por cada posicion de la matriz.");
 
             return rowSplit;
         }
