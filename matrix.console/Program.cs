@@ -21,6 +21,7 @@ namespace matrix.console
             }
             catch (Exception ex)
             {
+                Console.Clear();
                 Console.WriteLine(ex.Message);
                 Console.ReadLine();
             }
