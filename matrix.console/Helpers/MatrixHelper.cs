@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace matrix.console.Helpers
 {
@@ -14,11 +15,12 @@ namespace matrix.console.Helpers
                 Console.WriteLine("=======================================");
                 Console.WriteLine();
 
-                //input = input.Where(x => !string.IsNullOrEmpty(x.Trim())).ToArray();
+
+                input = input.Where(x => !string.IsNullOrEmpty(x.Trim())).ToArray();
                 int length = input.Length;
 
                 if (length == 0)
-                    throw new Exception("Error en el formato del archivo de texto: La matriz debe ser cuadrada");
+                    throw new Exception("Error en el formato del archivo de texto: debe cargar una matriz");
 
                 string[,] result = new string[length, length];
 
@@ -42,23 +44,30 @@ namespace matrix.console.Helpers
         }
         private static string[] Validate(int i, string[] input, int length)
         {
+            //tener en cuenta que los elementos de la matriz pueden ser cualquier caracter a excepcion de la coma y el espacio ya que se usan como separadores
+
+            //REGEX
+            //paginas utilizadas para hacer la regex
+            //https://regex101.com/
+            //https://regexr.com/
+
+            // ^ -> obliga que el comienzo matchee con el siguiente patron, en este caso (?!,).
+            //(?!,). -> el . es cualquier caracter pero con la excepcion de que empiece con la ','. (?!) -> hace que niegue el caracter coma
+            // los parentesis agrupan
+            // (, (?! )(?!,).)* -> este grupo dice que el caracter siguiente debe ser una coma, luego un espacio y el siguiente cualquier caracter (.) que sea distinto a un espacio y una coma. El * sirve para que le patron anterior, coincida 0 o mas veces.
+            // \n? -> salto de linea opcional, ya que la ultima fila quizas no tenga salto de linea
+            // $ -> se utiliza para matchee el final, y en conjunto con (^) se utiliza para que todo el string matchee completo
+            string pattern = @"^(?!,).(, (?! )(?!,).)*\n?$";
+            var regex = new Regex(pattern, RegexOptions.Singleline);
+            bool isRegex = regex.IsMatch(input[i]);
+            if (!isRegex)
+                throw new Exception("Error en el formato del archivo de texto: verifique que cada fila de la matriz cumpla el siguiente patron, por ejemplo en una matriz 4x4 -> 'c, c, c, c' (elemento de la matriz separado por una coma y un espacio)");
+
             string[] rowSplit = input[i].Split(',', (char)StringSplitOptions.RemoveEmptyEntries);
-            if (rowSplit.Length > length)
-                throw new Exception("Error en el formato del archivo de texto: La matriz debe ser cuadrada.");
-
-            //valido que no haya espacios vacios sin caracteres entre las comas (',')
-            string[] rowSplitTrim = rowSplit.Where(x => !string.IsNullOrEmpty(x.Trim())).ToArray();
-            //valido que esten ingresando un solo valor por fila/columna
-            string[] rowSplitValidateOneChar = rowSplit.Where(x => x.Trim().Length == 1).ToArray();
-
-            bool isSquareMatrix = rowSplitTrim.Length == length;
-            bool hasOneCharPerRowCol = rowSplitValidateOneChar.Length == length;
+            bool isSquareMatrix = rowSplit.Length == length;
 
             if (!isSquareMatrix)
                 throw new Exception("Error en el formato del archivo de texto: La matriz debe ser cuadrada.");
-
-            if (!hasOneCharPerRowCol)
-                throw new Exception("Error en el formato del archivo de texto: La matriz debe contener solo un caracter por cada posicion de la matriz.");
 
             return rowSplit;
         }
@@ -179,6 +188,5 @@ namespace matrix.console.Helpers
                 throw ex;
             }
         }
-
     }
 }
