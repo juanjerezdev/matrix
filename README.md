@@ -1,7 +1,7 @@
 # Matrix - Juan Jerez
 ***
 ### Requesitos para ejecutar la aplicación
-1. Visual Studio 2019 o superior
+1. Visual Studio 2019 o superior (yo lo probé con 2019 y 2022, seguramente 2017 debería andar también pero puse 2019 o superior porque fue donde pude probar)
 2. Tener instalado el .NET Framework 4.6.2
 
 ### Ejecutar Aplicación desde visual estudio
@@ -21,4 +21,4 @@ Con respecto a la salida, va a devolver la primera cadena de caracteres adyacent
 
 ## Ejecutar Aplicación desde el archivo .exe
 
-Otra de manera de poder ejecutar la aplicación es accediendo a la carpeta matrix.executable (ubicada en la raiz del repositorio). Donde se encuentra un archivo .rar que se deberá descomprimir para poder acceder a ejecutar al archivo matrix.console.exe.
+Otra manera de ejecutar la aplicación es accediendo a la carpeta matrix.executable (ubicada en la raiz del repositorio). Donde se encuentra un archivo .rar que se deberá descomprimir para poder acceder a ejecutar al archivo matrix.console.exe.
