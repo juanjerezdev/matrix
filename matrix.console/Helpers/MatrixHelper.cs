@@ -52,12 +52,12 @@ namespace matrix.console.Helpers
             //https://regexr.com/
 
             // ^ -> obliga que el comienzo matchee con el siguiente patron, en este caso (?!,).
-            //(?!,). -> el . es cualquier caracter pero con la excepcion de que empiece con la ','. (?!) -> hace que niegue el caracter coma
+            //(?! )(?!,). -> el . es cualquier caracter pero con la excepcion de que empiece con la ','. (?!) -> hace que niegue el caracter coma (?! ) -> hace que niegue el caracter espacio 
             // los parentesis agrupan
             // (, (?! )(?!,).)* -> este grupo dice que el caracter siguiente debe ser una coma, luego un espacio y el siguiente cualquier caracter (.) que sea distinto a un espacio y una coma. El * sirve para que le patron anterior, coincida 0 o mas veces.
             // \n? -> salto de linea opcional, ya que la ultima fila quizas no tenga salto de linea
             // $ -> se utiliza para matchee el final, y en conjunto con (^) se utiliza para que todo el string matchee completo
-            string pattern = @"^(?!,).(, (?! )(?!,).)*\n?$";
+            string pattern = @"^(?! )(?!,).(, (?! )(?!,).)*\n?$";
             var regex = new Regex(pattern, RegexOptions.Singleline);
             bool isRegex = regex.IsMatch(input[i]);
             if (!isRegex)
