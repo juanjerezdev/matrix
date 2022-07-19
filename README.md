@@ -1,7 +1,7 @@
 # Matrix - Juan Jerez
 ***
 ### Requesitos para ejecutar la aplicación
-1. Visual Studio 2019 o superior
+1. Visual Studio 2019 o superior (yo lo probé con 2019 y 2022, seguramente 2017 debería andar también pero puse 2019 o superior porque fue donde pude probar)
 2. Tener instalado el .NET Framework 4.6.2
 
 ### Ejecutar Aplicación desde visual estudio
