@@ -165,7 +165,6 @@ namespace matrix.console.Helpers
                     // arranco del extremo superior derecho (analizo primera fila y primera columna)
                     // cuando i se pone negativo (cambia de row) le hago el abs para que encuentre el index en la matriz
                     // la columna es siempre la i hasta que pasa a los negativo y le dejo cero para que tome la primer columna
-
                     for (int row = (i < 0 ? Math.Abs(i) : 0), col = (i > 0 ? i : 0); row < matrixLength && col < matrixLength; row++, col++)
                         concat = concat + matrix[row, col];
 
