@@ -21,4 +21,4 @@ Con respecto a la salida, va a devolver la primera cadena de caracteres adyacent
 
 ## Ejecutar Aplicación desde el archivo .exe
 
-Otra de manera de poder ejecutar la aplicación es accediendo a la carpeta matrix.executable (ubicada en la raiz del repositorio). Donde se encuentra un archivo .rar que se deberá descomprimir para poder acceder a ejecutar al archivo matrix.console.exe.
+Otra manera de ejecutar la aplicación es accediendo a la carpeta matrix.executable (ubicada en la raiz del repositorio). Donde se encuentra un archivo .rar que se deberá descomprimir para poder acceder a ejecutar al archivo matrix.console.exe.
